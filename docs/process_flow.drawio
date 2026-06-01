@@ -1,0 +1,58 @@
+<mxfile host="Electron">
+  <diagram name="Process Flow" id="flow1">
+    <mxGraphModel dx="2054" dy="1235" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" parent="1" style="text;html=1;align=center;fontSize=18;fontStyle=1;fontColor=#1B2631;" value="Federal Spending Anomaly Detection - Process Flow" vertex="1">
+          <mxGeometry height="30" width="360" x="180" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="src" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#D6EAF8;strokeColor=#34495E;fontColor=#1B2631;" value="USASpending API&lt;br&gt;(public federal award data)" vertex="1">
+          <mxGeometry height="100" width="260" x="230" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ingest" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#34495E;fontColor=#1B2631;" value="1. Data Ingestion&lt;br&gt;Python pulls awards, handles paging, retries, and logging" vertex="1">
+          <mxGeometry height="80" width="260" x="260" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="raw" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#FEF9E7;strokeColor=#34495E;fontColor=#1B2631;" value="Raw Staging Table&lt;br&gt;staging.awards_raw&lt;br&gt;(data stored as received)" vertex="1">
+          <mxGeometry height="80" width="260" x="430" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="clean" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#34495E;fontColor=#1B2631;" value="2. Cleaning and Standardizing&lt;br&gt;trim names, fix casing, remove duplicates" vertex="1">
+          <mxGeometry height="80" width="260" x="40" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="model" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#34495E;fontColor=#1B2631;" value="3. Data Modeling&lt;br&gt;Curated star schema: fact_award + dimensions" vertex="1">
+          <mxGeometry height="80" width="260" x="230" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="rules" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2F8;strokeColor=#34495E;fontColor=#1B2631;" value="4. Anomaly Rule Engine&lt;br&gt;rules R1 to R6 flag awards plus a weighted risk score" vertex="1">
+          <mxGeometry height="80" width="260" x="440" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="dash" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5F5E3;strokeColor=#34495E;fontColor=#1B2631;" value="5. Dashboards&lt;br&gt;Power BI and Tableau: summary + ranked review" vertex="1">
+          <mxGeometry height="80" width="260" x="230" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="review" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FADBD8;strokeColor=#34495E;fontColor=#1B2631;" value="6. Reviewer Triage&lt;br&gt;start with highest risk, see why it flagged, drill in, and decide" vertex="1">
+          <mxGeometry height="90" width="260" x="40" y="1010" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="src" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#34495E;endArrow=classic;" target="ingest">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="ingest" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#34495E;endArrow=classic;" target="raw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="raw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#34495E;endArrow=classic;" target="clean">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="clean" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#34495E;endArrow=classic;" target="model">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="model" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#34495E;endArrow=classic;" target="rules">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="rules" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#34495E;endArrow=classic;" target="dash">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="dash" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#34495E;endArrow=classic;" target="review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
