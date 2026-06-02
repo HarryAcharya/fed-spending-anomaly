@@ -176,3 +176,30 @@ SET risk_score =
     + 1 * rule_r4
     + 2 * rule_r5
     + 1 * rule_r6;
+-- ===========================================================
+-- Reporting helper columns (used by the dashboards)        FR-07
+-- rules_triggered: a readable list like 'R1, R2, R5, R6'.
+-- risk_band: a plain text label so the dashboards never rely on
+--   color alone, which also helps the Section 508 review later.
+--   None = 0, Low = 1 to 3, Medium = 4 to 6, High = 7 and up.
+-- ===========================================================
+ALTER TABLE fact_award ADD COLUMN IF NOT EXISTS rules_triggered text;
+ALTER TABLE fact_award ADD COLUMN IF NOT EXISTS risk_band       text;
+
+UPDATE fact_award
+SET rules_triggered = NULLIF(concat_ws(', ',
+        CASE WHEN rule_r1 = 1 THEN 'R1' END,
+        CASE WHEN rule_r2 = 1 THEN 'R2' END,
+        CASE WHEN rule_r3 = 1 THEN 'R3' END,
+        CASE WHEN rule_r4 = 1 THEN 'R4' END,
+        CASE WHEN rule_r5 = 1 THEN 'R5' END,
+        CASE WHEN rule_r6 = 1 THEN 'R6' END
+    ), '');
+
+UPDATE fact_award
+SET risk_band = CASE
+        WHEN risk_score = 0 THEN 'None'
+        WHEN risk_score <= 3 THEN 'Low'
+        WHEN risk_score <= 6 THEN 'Medium'
+        ELSE 'High'
+    END;
