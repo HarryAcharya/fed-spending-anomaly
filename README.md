@@ -8,6 +8,16 @@ An end to end analytics project that pulls real federal contract award data, mod
 
 Tableau Public: https://public.tableau.com/app/profile/hari.acharya2369/viz/NASAFederalSpendingAnomalyDetection/AnomalyOverview
 
+## Dashboards
+
+Executive summary, the leadership overview:
+
+![Executive summary dashboard](images/executive_summary.png)
+
+Anomaly review, every flagged award ranked by risk score:
+
+![Anomaly review dashboard](images/anomaly_review.png)
+
 ## What it does
 
 The project takes 16,866 NASA contract awards from a public API, cleans and models them into a star schema, runs six documented rules that flag awards with unusual patterns, gives each award a weighted risk score so reviewers can start with the most concerning ones, and shows the whole picture in two dashboards built in different tools that agree to the dollar.
